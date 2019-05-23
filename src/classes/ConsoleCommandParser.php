@@ -12,15 +12,24 @@ class ConsoleCommandParser
     protected $filled_opts = [];
     protected $errors = [];
 
+    /**
+     * Add new console argument
+     * @param string $long
+     * @param string $short
+     * @param bool $required
+     */
     public function addCommand(string $long, string $short, bool $required = true): void
     {
-        $long  .= $required ? ":" : "::";
+        $long .= $required ? ":" : "::";
         $short .= $required ? ":" : "::";
 
         $this->short_opts[] = $short;
         $this->long_opts[] = $long;
     }
 
+    /**
+     * Validation using passed arguments from user
+     */
     public function parse(): void
     {
         $this->filled_opts = getopt(implode("", $this->short_opts), $this->long_opts);
@@ -36,6 +45,11 @@ class ConsoleCommandParser
         }
     }
 
+    /**
+     * Returns argument value by name
+     * @param string $argname
+     * @return string|null
+     */
     public function getArg(string $argname): ?string
     {
         $arg = $this->filled_opts[$argname] ?? null;
@@ -43,6 +57,10 @@ class ConsoleCommandParser
         return $arg;
     }
 
+    /**
+     * Get validation errors list
+     * @return array
+     */
     public function getErrors(): array
     {
         return $this->errors;

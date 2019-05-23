@@ -16,8 +16,6 @@ use Psr\Log\LoggerInterface;
 class ApplicationFacade
 {
 
-    protected $counter = 1;
-
     /**
      * @var LoggerInterface
      */
@@ -54,6 +52,10 @@ class ApplicationFacade
         $this->consoleParser = $consoleParser;
     }
 
+    /**
+     * Sets required console arguments
+     * @return bool
+     */
     public function init(): bool
     {
         $result = true;
@@ -74,6 +76,11 @@ class ApplicationFacade
         return $result;
     }
 
+    /**
+     * Opens data providers and runs validation
+     * @param AbstractDataProvider $provider
+     * @return bool
+     */
     public function prepareDataProvider(AbstractDataProvider $provider): bool
     {
         $result = true;
@@ -94,6 +101,11 @@ class ApplicationFacade
         return $result;
     }
 
+    /**
+     * Sets default processor for each entry in file
+     * @param AbstractRowProcessor $rowProcessor
+     * @return bool
+     */
     public function setRowProcessor(AbstractRowProcessor $rowProcessor): bool
     {
         $result = true;
@@ -110,6 +122,7 @@ class ApplicationFacade
     }
 
     /**
+     * Sets data store for saving transformed entries
      * @param AbstractDataStore $dataStore
      */
     public function setDataStore(AbstractDataStore $dataStore): void
@@ -123,11 +136,21 @@ class ApplicationFacade
         }
     }
 
+    /**
+     * Saves the new transformed row in the data store
+     * @param array $row
+     * @return bool
+     */
     public function saveTransformedRow(array $row): bool
     {
         return $this->dataStore->addRow($row);
     }
 
+    /**
+     * Runs row transformation process
+     * @param Closure $resultRestriction
+     * @return array|null
+     */
     public function transformNextRow(Closure $resultRestriction): ?array
     {
         $row = [];
@@ -140,23 +163,23 @@ class ApplicationFacade
 
                 if (!$resultRestriction($result)) {
                     $this->logger->notice(sprintf("Numbers %s and %s are wrong", $operands[0], $operands[1]));
-                }
-                else {
+                } else {
                     $row = array_merge($operands, [$result]);
                 }
             } catch (RowProcessorException $e) {
                 $this->showError($e->getMessage());
             }
-        }
-        else {
+        } else {
             $row = null;
         }
-
-        $this->counter++;
 
         return $row;
     }
 
+    /**
+     * Sends error message to the log and console
+     * @param string $error
+     */
     public function showError(string $error): void
     {
         $this->logger->error($error);

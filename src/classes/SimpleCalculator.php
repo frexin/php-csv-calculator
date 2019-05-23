@@ -11,14 +11,18 @@ use DivisionByZeroError;
 class SimpleCalculator implements AbstractRowProcessor
 {
 
-    const ACT_ADD  = "plus";
-    const ACT_SUB  = "minus";
+    const ACT_ADD = "plus";
+    const ACT_SUB = "minus";
     const ACT_MULT = "multiply";
-    const ACT_DIV  = "division";
+    const ACT_DIV = "division";
 
     private $action = null;
     private $operands = [];
 
+    /**
+     * Returns callbacks for all available operations
+     * @return array
+     */
     public function getEvaluators(): array
     {
         return [

@@ -8,6 +8,10 @@ use app\interfaces\AbstractOperandCollection;
 use RuntimeException;
 use SplFileObject;
 
+/**
+ * Class CsvDataProvider
+ * @package app\classes
+ */
 class CsvDataProvider implements AbstractDataProvider
 {
     /**
@@ -74,6 +78,11 @@ class CsvDataProvider implements AbstractDataProvider
         return $result;
     }
 
+
+    /**
+     * Returns next row from data provider
+     * @return AbstractOperandCollection|null
+     */
     public function getNextOperandsCollection(): ?AbstractOperandCollection
     {
         $result = null;
@@ -87,12 +96,20 @@ class CsvDataProvider implements AbstractDataProvider
         return $result;
     }
 
+    /**
+     * Watching for the remaining rows
+     * @return bool
+     */
     public function hasRemainingRows(): bool
     {
         return !$this->eof;
     }
 
 
+    /**
+     *
+     * @return array|null
+     */
     protected function getNextRow(): ?array
     {
         $result = null;
@@ -105,17 +122,20 @@ class CsvDataProvider implements AbstractDataProvider
             }
 
             $this->fileObject->next();
-        }
-        else {
+        } else {
             $this->eof = true;
         }
 
         return $result;
     }
 
+    /**
+     * @param $row
+     * @return bool
+     */
     protected function validateRow($row)
     {
-        $arr = array_filter($row, function($val) {
+        $arr = array_filter($row, function ($val) {
             $val = $this->operandCollection::prepareOperand($val);
 
             return is_numeric($val);
@@ -126,6 +146,10 @@ class CsvDataProvider implements AbstractDataProvider
         return $result;
     }
 
+    /**
+     * @param array $row
+     * @return array
+     */
     protected function prepareRow(array $row)
     {
         array_walk($row, function (&$item) {

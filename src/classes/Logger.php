@@ -61,7 +61,6 @@ class Logger implements LoggerInterface
         return $this->log(LogLevel::DEBUG, $message);
     }
 
-
     public function log($level, $message, array $context = [])
     {
         $date = date('d.m.Y H:i:s');

@@ -27,5 +27,9 @@ interface AbstractDataProvider
      */
     public function getNextOperandsCollection(): ?AbstractOperandCollection;
 
+    /**
+     * Watching for the remaining rows
+     * @return bool
+     */
     public function hasRemainingRows(): bool;
 }

@@ -1,0 +1,20 @@
+{
+    "name": "frexin/php-csv-calculator",
+    "description": "CSV calculator",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kirill Senkevich",
+            "email": "frexin@gmail.com"
+        }
+    ],
+    "autoload" : {
+        "psr-4" : {
+            "app\\" : "src/"
+        }
+    },
+    "require": {
+        "psr/log": "^1.1"
+    }
+}

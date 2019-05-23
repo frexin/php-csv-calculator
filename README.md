@@ -1,6 +1,5 @@
-# Neuffer developers-test
+# php-csv-calculator
 
-We have prepared for you simple test task what as we believe, allow us to estimate your experience.
 It is a small php-script, which should be started in console like:
 
 `php console.php --action {action}  --file {file}`
@@ -50,18 +49,3 @@ And in log file, something like:
  
 _numbers are -30 and 20 are wrong_ <br/>
 _numbers are 3 and 0 are wrong, is not allowed_ <br/>
-
-##Task 
-You need to refactor code and write it on proper way. Just do your best: update/delete/add code as you wish.
-
-After finishing - please push your code in your github/bitbucket account, and send me link back.
-
-###Requirements
-
-* After refactoring code shoud work
-* Code should work on PHP7.2+
-* As file source example please use test.csv
-
-###Result
-Please put result of your work in your Github or Bitbucket account, and send link back.
-

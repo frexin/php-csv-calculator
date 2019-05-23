@@ -11,7 +11,6 @@ use app\interfaces\AbstractDataProvider;
 use app\interfaces\AbstractDataStore;
 use app\interfaces\AbstractRowProcessor;
 use Closure;
-use Exception;
 use Psr\Log\LoggerInterface;
 
 class ApplicationFacade
@@ -75,7 +74,7 @@ class ApplicationFacade
         return $result;
     }
 
-    public function prepareDataProvider(AbstractDataProvider $provider)
+    public function prepareDataProvider(AbstractDataProvider $provider): bool
     {
         $result = true;
 
@@ -84,7 +83,7 @@ class ApplicationFacade
             $this->dataProvider->open($this->consoleParser->getArg('file'));
         } catch (DataProviderException $e) {
             $this->showError($e->getMessage());
-            $result = false;
+            return false;
         }
 
         if (!$this->dataProvider->simpleValidate()) {
